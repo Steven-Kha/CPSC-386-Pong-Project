@@ -1,41 +1,36 @@
-#pg 266
-
-#                      (x,   y  width, height)
-# Left Paddle position: <rect(0, 267, 37, 266)>
-
 import pygame
 pygame.init()
 from pygame.sprite import Sprite
 
-class Bottom_Paddle(Sprite):
+class Top_Left(Sprite):
 
     def __init__(self, ai_settings, screen):
-        """Create the Bottom_Paddle and set its starting position."""
-        super(Bottom_Paddle, self).__init__()
+        """Create the Top_Paddle and set its starting position."""
+        super(Top_Left, self).__init__()
         self.screen = screen
         self.ai_settings = ai_settings
 
-        self.rect = pygame.Rect(0, 0, ai_settings.bottom_paddle_width,
-                                ai_settings.bottom_paddle_height)
+        self.rect = pygame.Rect(0, 0, ai_settings.top_left_width,
+                                ai_settings.top_left_height)
 
         self.screen_rect = screen.get_rect()
 
-        self.color = ai_settings.bottom_paddle_color
+        self.color = ai_settings.left_paddle_color
 
-        self.height = float(ai_settings.bottom_paddle_height)
+        self.height = float(ai_settings.top_left_height)
 
-        #Bottom_Paddle starts at the bottom center of screen
-        self.rect.centerx= 300
-        self.rect.bottom = self.screen_rect.bottom
+        #Top_Paddle starts at top center of screen
+        self.rect.centerx = 300
+        self.rect.top = self.screen_rect.top
 
-        #print("Bottom Paddle position: " + str(self.rect))
+        # print("Top Paddle position: " + str(self.rect))
 
         # Store a decimal value for the ship's center.
         self.center = float(self.rect.centerx)
 
         # Movement flag for continuous movement
-        self.moving_left = False
         self.moving_right = False
+        self.moving_left = False
 
     def update(self, ai_settings):
         """Update the ship's position based on the movement flag."""
@@ -60,11 +55,18 @@ class Bottom_Paddle(Sprite):
 
         self.rect.centerx = self.center
 
-    def center_bottom_paddle(self):
+    def center_top_left(self):
         """Center the ship on the screen."""
         self.center = self.screen_rect.midleft
 
+    def check_edges(self):
+        if self.rect.left <= 600:
+            return True
+        elif self.rect.right >= 1200:
+            return True
 
-    def draw_bottom_paddle(self):
+    def draw_top_left(self):
         """Draw the bullet to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)
+
+# By Steven Kha 2018

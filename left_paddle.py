@@ -64,3 +64,5 @@ class Left_Paddle(Sprite):
     def draw_left_paddle(self):
         """Draw the bullet to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)
+
+# By Steven Kha 2018

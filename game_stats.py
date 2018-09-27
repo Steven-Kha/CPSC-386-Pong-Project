@@ -23,3 +23,5 @@ class GameStats:
 
     def reset_stats(self):
         self.left_paddle_left = self.ai_settings.left_paddle_limit
+
+# By Steven Kha 2018

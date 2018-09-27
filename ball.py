@@ -40,10 +40,14 @@ class Ball(Sprite):
         if self.rect.colliderect(right_paddle.rect):
             return True
 
-    def collision_top_bottom(self, top_paddle, bottom_paddle):
+    def collision_top_bottom(self, top_paddle, bottom_paddle, top_left, bottom_right):
         if self.rect.colliderect(top_paddle.rect):
             return True
         if self.rect.colliderect(bottom_paddle.rect):
+            return True
+        if self.rect.colliderect(top_left.rect):
+            return True
+        if self.rect.colliderect(bottom_right):
             return True
 
 

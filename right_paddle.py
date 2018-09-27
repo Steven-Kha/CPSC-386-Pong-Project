@@ -17,7 +17,7 @@ class Right_Paddle(Sprite):
 
         self.screen_rect = screen.get_rect()
 
-        self.color = ai_settings.right_paddle_color
+        self.color = ai_settings.top_paddle_color
 
         self.height = float(ai_settings.right_paddle_height)
 
@@ -27,34 +27,33 @@ class Right_Paddle(Sprite):
         #print("Reft Paddle position: " + str(self.rect))
 
         # Store a decimal value for the ship's center.
-        self.center = float(self.rect.centery)
+        self.y = float(self.rect.centery)
+
+        self.speed_factor = ai_settings.right_paddle_speed_factor
 
         # Movement flag for continuous movement
         self.moving_up = False
         self.moving_down = False
 
-    def update(self, ai_settings):
+    def update(self, ai_settings, balls):
         """Update the ship's position based on the movement flag."""
         # Update the ship's center value, not the rect.
+        for ball in balls.sprites():
+            if ball.rect.centery + ai_settings.cpu_slow > 300:
+                if ball.rect.centery > self.rect.centery:
+                    self.y += (ai_settings.right_paddle_y_direction *
+                               ai_settings.right_paddle_speed_factor)
+                else:
+                    self.y -= (ai_settings.right_paddle_y_direction *
+                               ai_settings.right_paddle_speed_factor)
 
-        #stop paddle from going off the top edge
-        # Y axis gets smaller when it goes up!
-        if self.moving_up and self.rect.top > 0:
-            self.center -= self.ai_settings.right_paddle_speed_factor
-            # print("Left Paddle position: " + str(self.rect))
-            # print("self.rect.top: " + str(self.rect.top) + " > "
-            #     "self.screen_rect.top: " + str(self.screen_rect.top))
+        self.rect.y = self.y
 
-        # stop paddle from going off the bottom edge y axis gettings
-        # bigger when it moves down! When it reaches the end it is 800
-        if self.moving_down and self.rect.bottom < 800:
-            self.center += self.ai_settings.right_paddle_speed_factor
-
-            # print("self.rect.bottom: " + str(self.rect.bottom) + "< 800")
-            # print("Left Paddle position: " + str(self.rect))
-        # Update rect object from self.center.
-
-        self.rect.centery = self.center
+    def check_edges(self):
+        if self.rect.top <= 0:
+            return True
+        elif self.rect.bottom >= 800:
+            return True
 
     def center_right_paddle(self):
         """Center the ship on the screen."""
@@ -64,3 +63,5 @@ class Right_Paddle(Sprite):
     def draw_right_paddle(self):
         """Draw the bullet to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)
+
+# By Steven Kha 2018

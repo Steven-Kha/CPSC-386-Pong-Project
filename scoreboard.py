@@ -169,3 +169,4 @@ class Scoreboard():
         self.screen.blit(self.high_score_label_image, self.high_score_label_rect)
         self.screen.blit(self.high_level_label_image, self.high_level_label_rect)
 
+# By Steven Kha 2018
